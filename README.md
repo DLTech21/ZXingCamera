@@ -1,4 +1,6 @@
 # ZXingCamera
 Camera for Android
 
-利用zxing的camera实现拍照及实时识别身份证等功能
+* 1.利用zxing的camera实现拍照
+
+* 2.身份证ocr
