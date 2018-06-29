@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
+
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -17,11 +20,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         AndPermission.with(this)
-                .runtime()
                 .permission(new String[]{Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE, Permission.CAMERA})
-                .onGranted(permissions -> {
-                })
-                .onDenied(permissions -> {
+                .onGranted(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                    }
                 })
                 .start();
 

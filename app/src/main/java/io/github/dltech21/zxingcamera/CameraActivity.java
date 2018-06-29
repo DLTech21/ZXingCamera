@@ -238,9 +238,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
             FileUtils.createOrExistsDir(dir);
             String photoPath = dir + File.separator + System.currentTimeMillis() + ".png";
             saveOriginal(data, photoPath);
-            Bitmap bitmap = ImageUtils.getBitmap(photoPath);
-            bitmap = rotateBitmap(bitmap);
-            ImageUtils.save(bitmap, photoPath, Bitmap.CompressFormat.PNG);
             return true;
         }
 
