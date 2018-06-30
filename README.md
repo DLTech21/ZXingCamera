@@ -15,5 +15,5 @@ compile 'io.github.dltech21:zcamera:1.0.0'
 只需要引用库idcard_ocr，不再需要zcamera，查看demo，
 
 ```java
-compile 'io.github.dltech21:idcard_ocr:1.0.11'
+compile 'io.github.dltech21:idcard_ocr:1.0.13'
 ```
