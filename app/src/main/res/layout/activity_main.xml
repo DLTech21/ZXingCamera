@@ -10,4 +10,18 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:text="普通照相" />
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="身份证人像面识别" />
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="身份证过会面识别" />
 </LinearLayout>

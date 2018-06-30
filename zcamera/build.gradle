@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -25,12 +25,11 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-apply plugin: 'com.aaron.gradle.bintray-release'
 publish {
     userOrg = 'dltech21'
     groupId = 'io.github.dltech21'
     artifactId = 'zcamera'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'camera for Android'
     website = 'https://github.com/DLTech21/ZXingCamera'
 }

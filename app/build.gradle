@@ -9,6 +9,10 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        ndk {
+            // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
+            abiFilters 'armeabi'// 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
     }
     buildTypes {
         release {
@@ -19,10 +23,8 @@ android {
 }
 
 dependencies {
-    compile 'io.github.dltech21:zcamera:1.0.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:27.1.1'
-    //    implementation project(':zcamera')
-    compile 'com.blankj:utilcode:1.17.1'
+    compile 'io.github.dltech21:idcard_ocr:1.0.12'
     compile 'com.yanzhenjie:permission:2.0.0-rc4'
 }

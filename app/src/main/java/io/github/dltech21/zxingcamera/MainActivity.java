@@ -12,6 +12,9 @@ import com.yanzhenjie.permission.Permission;
 
 import java.util.List;
 
+import io.github.dltech21.ocr.IDCardEnum;
+import io.github.dltech21.ocr.OcrCameraActivity;
+
 public class MainActivity extends Activity {
 
     @Override
@@ -32,6 +35,20 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CameraActivity.class));
+            }
+        });
+
+        findViewById(R.id.bt2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OcrCameraActivity.open(MainActivity.this, IDCardEnum.FaceEmblem, 1001);
+            }
+        });
+
+        findViewById(R.id.bt3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OcrCameraActivity.open(MainActivity.this, IDCardEnum.NationalEmblem, 1001);
             }
         });
     }

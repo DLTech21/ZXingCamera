@@ -1,44 +1,27 @@
 package io.github.dltech21.zxingcamera;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.blankj.utilcode.util.FileUtils;
-import com.blankj.utilcode.util.ImageUtils;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.dl.sdk.zcamera.camera.AmbientLightManager;
 import com.dl.sdk.zcamera.camera.CameraManager;
 import com.dl.sdk.zcamera.camera.InactivityTimer;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 /**
  * Created by Donal on 2017/8/15.
@@ -99,27 +82,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
         } else {
             // Install the callback and wait for surfaceCreated() to init the camera.
             surfaceHolder.addCallback(this);
-        }
-    }
-
-    private int getCurrentOrientation() {
-        int rotation = getWindowManager().getDefaultDisplay().getRotation();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            switch (rotation) {
-                case Surface.ROTATION_0:
-                case Surface.ROTATION_90:
-                    return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                default:
-                    return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
-            }
-        } else {
-            switch (rotation) {
-                case Surface.ROTATION_0:
-                case Surface.ROTATION_270:
-                    return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-                default:
-                    return ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-            }
         }
     }
 
@@ -235,7 +197,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 
         private boolean saveToSDCard(byte[] data) {
             String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zxingcamera";
-            FileUtils.createOrExistsDir(dir);
+            File file = new File(dir);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
             String photoPath = dir + File.separator + System.currentTimeMillis() + ".png";
             saveOriginal(data, photoPath);
             return true;
@@ -261,26 +226,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
             }
         }
 
-    }
-
-    public Bitmap rotateBitmap(Bitmap bitmap) {
-        System.gc();
-        if (null == bitmap) {
-            return bitmap;
-        }
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
-        Bitmap newb = Bitmap.createBitmap(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(newb);
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        Bitmap new2 = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
-        canvas.drawBitmap(new2, new Rect(0, 0, new2.getWidth(), new2.getHeight()), new Rect(0, 0, ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight()), null);
-        if (null != bitmap) {
-            bitmap.recycle();
-        }
-
-        return newb;
     }
 
     private Handler handler = new Handler() {
