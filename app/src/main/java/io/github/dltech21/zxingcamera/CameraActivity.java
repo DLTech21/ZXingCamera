@@ -1,6 +1,8 @@
 package io.github.dltech21.zxingcamera;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.dl.sdk.zcamera.camera.AmbientLightManager;
 import com.dl.sdk.zcamera.camera.CameraManager;
 import com.dl.sdk.zcamera.camera.InactivityTimer;
@@ -22,6 +25,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import io.github.dltech21.iddetect.util.BmpUtil;
+
 
 /**
  * Created by Donal on 2017/8/15.
@@ -35,10 +41,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
     private AmbientLightManager ambientLightManager;
 
     private ImageView imgPre;
-
-    CameraManager getCameraManager() {
-        return cameraManager;
-    }
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -172,6 +174,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
         cameraManager.takePicture();
     }
 
+    String photoPath;
 
     private class SavePicTask extends Thread {
         private byte[] data;
@@ -201,8 +204,14 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
             if (!file.exists()) {
                 file.mkdirs();
             }
-            String photoPath = dir + File.separator + System.currentTimeMillis() + ".png";
+            photoPath = dir + File.separator + System.currentTimeMillis() + ".png";
             saveOriginal(data, photoPath);
+            try {
+                Bitmap bitmap = BmpUtil.getRotateBitmap(BitmapFactory.decodeFile(photoPath), 90.0f, true);
+                BmpUtil.saveBmpFile(bitmap, photoPath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -235,6 +244,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
             if (msg.what == 1) {
                 Camera camera = (Camera) msg.obj;
                 if (camera != null) {
+                    Glide.with(CameraActivity.this).load("file://" + photoPath).into((ImageView) findViewById(R.id.img_pre));
                     camera.startPreview();
                     if (cameraManager.getAutoFocusManager() != null) {
                         cameraManager.getAutoFocusManager().start();
