@@ -1,4 +1,9 @@
 # ZXingCamera
+
+欢迎赞赏，以支持服务器、域名等费用
+
+![](https://wx4.sinaimg.cn/mw690/668b990agy1g3fuiv1qx6j20fu0dpq57.jpg)
+
 Camera for Android
 
 * 1.利用zxing的camera实现拍照
